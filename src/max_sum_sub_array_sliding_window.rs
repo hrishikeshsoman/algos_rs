@@ -3,15 +3,15 @@ fn max_sum_sub_array_sliding_window(arr: &Vec<i32>, k: usize) -> Option<i32>{
         return None
     }
     let initial_window = &arr[0..k];
-    let window_sum: i32 = initial_window.iter().sum();
-    let mut max_sum = window_sum;
+    let mut current_window_sum: i32 = initial_window.iter().sum();
+    let mut max_sum = current_window_sum;
     for i in 1..arr.len() {
         let left  = i;
-        let right = i + k;
-        if right > arr.len() {
+        let right = i + k - 1;
+        if right >= arr.len() {
             break;
         }
-        let current_window_sum = arr[left..right].iter().sum();
+        current_window_sum = current_window_sum - arr[left - 1] + arr[right];
         if current_window_sum > max_sum {
             max_sum = current_window_sum
         }

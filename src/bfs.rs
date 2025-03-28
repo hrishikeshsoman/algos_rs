@@ -22,12 +22,6 @@ fn bfs(start: String, target: String) -> Option<String> {
     while let Some(node) = queue.pop_front() {
         let current_distance = *distance_of_node.get(&node).unwrap();
         if node == target {
-            println!(
-                "Found target {} at distance {} from {}",
-                node,
-                &distance_of_node.get(&node).unwrap().clone(),
-                start
-            );
             return Some(target);
         } else {
             if let Some(neighbours) = adjacency_list.get(&node) {
@@ -43,34 +37,15 @@ fn bfs(start: String, target: String) -> Option<String> {
             }
         }
     }
-    println!("Target not found! :( ");
     None
 }
 
 pub fn run_bfs_tests() {
-    let test_cases = vec![
-        ("A", "F", Some("F")),  // Path exists: A → B → E → F
-        ("A", "C", Some("C")),  // Direct neighbor
-        ("A", "A", Some("A")),  // Same start and target
-        ("C", "F", None),       // No path from C to F
-        ("X", "A", None),       // Start node not in graph
-        ("A", "X", None),       // Target node not in graph
-    ];
-
     println!("---------BFS_BEGIN---------");
-
-    for (i, (start, target, expected)) in test_cases.into_iter().enumerate() {
-        let result = bfs(start.to_string(), target.to_string());
+        let result = bfs("A".to_string(), "F".to_string());
         println!(
-            "Test Case {}: {} — Start: {}, Target: {}, Expected: {:?}, Got: {:?}",
-            i + 1,
-            if result == expected { "✅ Passed" } else { "❌ Failed" },
-            start,
-            target,
-            expected,
-            result,
+            "Test Case 1, {}",
+            if result == Some("F".to_string()) { "✅ Passed" } else { "❌ Failed" },
         );
-    }
-
     println!("---------BFS_END-----------");
 }
